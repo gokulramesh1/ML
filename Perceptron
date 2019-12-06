@@ -27,7 +27,7 @@ class Perceptron:
                 self.w += x
             elif label == 0 and dot_product >= 0:
                 self.w -= x
-        print('\nTrained!')
+        print('\nTrained:')
 
     def preds(self):
         return np.asarray([1 if sum(self.w * x) >= 0 else 0 for x in self.inputs])
