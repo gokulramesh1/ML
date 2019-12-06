@@ -1,0 +1,44 @@
+import numpy as np
+
+class Perceptron:
+
+    def __init__(self, inputs, labels):
+        self.inputs = inputs
+        self.labels = labels
+        self.w = np.random.randint(-9,10,len(inputs[0]))
+
+        self.xn = np.asarray([x if self.labels[i] == 1 else -x for i, x in enumerate(self.inputs)])
+
+    def convergence(self):
+        for x in self.xn:
+            dot_product = sum(self.w * x)
+            if dot_product < 0:
+                return False
+        return True
+
+    def learn(self):
+        while not self.convergence():
+            r = np.random.randint(len(self.xn))
+            x = self.xn[r]
+            dot_product = sum(self.w * x)
+            if dot_product < 0:
+                self.w += x
+        print('\nTrained!')
+
+    def preds(self):
+        return np.asarray([1 if sum(self.w * x) >= 0 else 0 for x in self.inputs])
+
+
+inputs_1 = [np.random.randint(-9,10,10) for i in range(15)]
+labels_1 = np.random.randint(0,2,15)
+
+p1 = Perceptron(inputs_1, labels_1)
+print('w =',p1.w)
+print('Labels =',p1.labels)
+print('Predictions =', p1.preds())
+print('Convergence =', p1.convergence())
+p1.learn()
+print('w =',p1.w)
+print('Labels =',p1.labels)
+print('Predictions =', p1.preds())
+print('Convergence =', p1.convergence())
